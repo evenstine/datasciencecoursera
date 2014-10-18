@@ -15,17 +15,20 @@ corr <- function(directory, threshold = 0) {
   
   ids = df_nobs[ df_nobs$nobs > threshold, ]$id 
 
-  files = paste(directory, "/", sprintf("%03d", ids), ".csv", sep="")
+  corrs = vector(mode="numeric")
   
-  corrs = c()
+  if(length(ids)> 1){
   
-  for (file in files){
-    x = read.csv(file)
+    files = paste(directory, "/", sprintf("%03d", ids), ".csv", sep="")
+  
+    for (file in files){
+      x = read.csv(file)
     
-    x_prime = x[complete.cases(x$sulfate) & complete.cases(x$nitrate),]
+      x_prime = x[complete.cases(x$sulfate) & complete.cases(x$nitrate),]
     
-    df = data.frame (sulfate = x_prime$sulfate, nitrate = x_prime$nitrate)
-    corrs = append(corrs, cor(df)[1,2], length(corrs))
+      df = data.frame (sulfate = x_prime$sulfate, nitrate = x_prime$nitrate)
+      corrs = append(corrs, cor(df)[1,2], length(corrs))
+    }
   }
   
   corrs
