@@ -20,7 +20,7 @@ complete <- function(directory, id = 1:332) {
   
   for(file in files){
     x = read.csv(file)
-    nobs = append(nobs, length(x[complete.cases(x$sulfate)&complete.cases(x$nitrate),][,1]), length(nobs))
+    nobs = append(nobs, length(x[complete.cases(x$sulfate) & complete.cases(x$nitrate),][,1]), length(nobs))
     ids = append(ids, x$ID[1], length(ids))  
   }
 
